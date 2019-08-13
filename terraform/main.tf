@@ -42,12 +42,12 @@ resource "nsxt_logical_switch" "app" {
     transport_zone_id = "${data.nsxt_transport_zone.overlay_tz.id}"
     replication_mode = "MTEP"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
     tag {
-scope = "tier"
-tag = "app"
+        scope = "tier"
+        tag = "app"
     }
 }
 
@@ -60,12 +60,12 @@ resource "nsxt_logical_switch" "db" {
     transport_zone_id = "${data.nsxt_transport_zone.overlay_tz.id}"
     replication_mode = "MTEP"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
     tag {
-scope = "tier"
-tag = "db"
+        scope = "tier"
+        tag = "db"
     }
 }
 
@@ -81,8 +81,8 @@ resource "nsxt_logical_tier1_router" "tier1_router" {
   advertise_static_routes     = true
   advertise_nat_routes        = true
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -92,8 +92,8 @@ resource "nsxt_logical_router_link_port_on_tier0" "link_port_tier0" {
   display_name      = "TIER0_PORT1"
   logical_router_id = "${data.nsxt_logical_tier0_router.tier0_router.id}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -104,8 +104,8 @@ resource "nsxt_logical_router_link_port_on_tier1" "link_port_tier1" {
   logical_router_id             = "${nsxt_logical_tier1_router.tier1_router.id}"
   linked_logical_router_port_id = "${nsxt_logical_router_link_port_on_tier0.link_port_tier0.id}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -116,8 +116,8 @@ resource "nsxt_logical_port" "logical_port1" {
   display_name      = "AppToT1"
   logical_switch_id = "${nsxt_logical_switch.app.id}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -129,8 +129,8 @@ resource "nsxt_logical_router_downlink_port" "downlink_port" {
   linked_logical_switch_port_id = "${nsxt_logical_port.logical_port1.id}"
   ip_address                    = "${var.app["gw"]}/${var.app["mask"]}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -141,8 +141,8 @@ resource "nsxt_logical_port" "logical_port2" {
   display_name      = "WebToT1"
   logical_switch_id = "${nsxt_logical_switch.web.id}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -154,8 +154,8 @@ resource "nsxt_logical_router_downlink_port" "downlink_port2" {
   linked_logical_switch_port_id = "${nsxt_logical_port.logical_port2.id}"
   ip_address                    = "${var.web["gw"]}/${var.web["mask"]}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -166,8 +166,8 @@ resource "nsxt_logical_port" "logical_port3" {
   display_name      = "DBToT1"
   logical_switch_id = "${nsxt_logical_switch.db.id}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -179,8 +179,8 @@ resource "nsxt_logical_router_downlink_port" "downlink_port3" {
   linked_logical_switch_port_id = "${nsxt_logical_port.logical_port3.id}"
   ip_address                    = "${var.db["gw"]}/${var.db["mask"]}"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -196,8 +196,8 @@ resource "nsxt_ns_group" "nsgroup" {
     tag         = "${var.nsx_tag}"
   }
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -211,8 +211,8 @@ resource "nsxt_ns_group" "webnsgroup" {
     tag         = "web"
   }
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 # Create App NSGROUP
@@ -225,8 +225,8 @@ resource "nsxt_ns_group" "appnsgroup" {
     tag         = "app"
   }
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 # Create DB NSGROUP
@@ -239,8 +239,8 @@ resource "nsxt_ns_group" "dbnsgroup" {
     tag         = "db"
   }
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -251,8 +251,8 @@ resource "nsxt_l4_port_set_ns_service" "app" {
   protocol          = "TCP"
   destination_ports = ["${var.app_listen_port}"]
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -275,8 +275,8 @@ resource "nsxt_ip_set" "ip_set" {
   description  = "Infrastructure IPSET provisioned by Terraform"
   display_name = "Infra"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
   ip_addresses = "${var.ipset}"
 }
@@ -287,8 +287,8 @@ resource "nsxt_firewall_section" "firewall_section" {
   description  = "FS provisioned by Terraform"
   display_name = "Terraform Demo FW Section"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
   applied_to {
     target_type = "NSGroup"
@@ -423,8 +423,8 @@ resource "nsxt_nat_rule" "rule1" {
   translated_network        =  "${var.web["nat_ip"]}"
   match_source_network = "${var.web["ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -440,8 +440,8 @@ resource "nsxt_nat_rule" "rule2" {
   translated_network        = "${var.web["ip"]}"
   match_destination_network = "${var.web["nat_ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -459,8 +459,8 @@ resource "nsxt_nat_rule" "rule3" {
   translated_network        =  "${var.app["nat_ip"]}"
   match_source_network = "${var.app["ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -476,8 +476,8 @@ resource "nsxt_nat_rule" "rule4" {
   translated_network        = "${var.app["ip"]}"
   match_destination_network = "${var.app["nat_ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -494,8 +494,8 @@ resource "nsxt_nat_rule" "rule5" {
   translated_network        =  "${var.db["nat_ip"]}"
   match_source_network      = "${var.db["ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
 
@@ -511,7 +511,7 @@ resource "nsxt_nat_rule" "rule6" {
   translated_network        = "${var.db["ip"]}"
   match_destination_network = "${var.db["nat_ip"]}/32"
     tag {
-scope = "${var.nsx_tag_scope}"
-tag = "${var.nsx_tag}"
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
     }
 }
