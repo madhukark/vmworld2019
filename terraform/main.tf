@@ -10,9 +10,6 @@ provider "nsxt" {
 data "nsxt_transport_zone" "overlay_tz" {
     display_name = "${var.nsx_data_vars["transport_zone"]}"
 }
-data "nsxt_logical_tier0_router" "tier0_router" {
-  display_name = "${var.nsx_data_vars["t0_router_name"]}"
-}
 data "nsxt_edge_cluster" "edge_cluster1" {
     display_name = "${var.nsx_data_vars["edge_cluster"]}"
 }
@@ -69,6 +66,16 @@ resource "nsxt_logical_switch" "db" {
     }
 }
 
+resource "nsxt_logical_tier0_router" "tier0_router" {
+  description            = "Tier0 router provisioned by Terraform"
+  display_name           = "${var.nsx_rs_vars["t0_router_name"]}"
+  high_availability_mode = "ACTIVE_STANDBY"
+  edge_cluster_id        = "${data.nsxt_edge_cluster.edge_cluster1.id}"
+    tag {
+        scope = "${var.nsx_tag_scope}"
+        tag = "${var.nsx_tag}"
+    }
+}
 
 # Create T1 router
 resource "nsxt_logical_tier1_router" "tier1_router" {
@@ -90,7 +97,7 @@ resource "nsxt_logical_tier1_router" "tier1_router" {
 resource "nsxt_logical_router_link_port_on_tier0" "link_port_tier0" {
   description       = "TIER0_PORT1 provisioned by Terraform"
   display_name      = "TIER0_PORT1"
-  logical_router_id = "${data.nsxt_logical_tier0_router.tier0_router.id}"
+  logical_router_id = "${nsxt_logical_tier0_router.tier0_router.id}"
     tag {
         scope = "${var.nsx_tag_scope}"
         tag = "${var.nsx_tag}"

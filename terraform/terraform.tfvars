@@ -10,6 +10,7 @@ nsx_data_vars = {
     t1_router_name = "tf-router1"
 }
 nsx_rs_vars = {
+    t0_router_name = "Tier-0"
     t1_router_name = "tf-router1"
 }
 
